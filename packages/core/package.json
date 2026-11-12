@@ -1,0 +1,10 @@
+{
+  "name": "@biblio/core",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Logique métier de Biblio : ISBN, stockage, CSV, sauvegarde JSON, recherche Google Books / Open Library",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": { ".": "./src/index.js" },
+  "scripts": { "test": "node --test" }
+}
