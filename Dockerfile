@@ -2,7 +2,7 @@
 FROM node:22-alpine AS build
 WORKDIR /app
 COPY . .
-RUN npm test && npm run build
+RUN node --test "packages/core/test/**/*.test.js" && node scripts/build.mjs
 
 # Étape 2 : service par nginx
 FROM nginx:1.27-alpine
