@@ -37,6 +37,21 @@ npm run check     # tests + build
 `localhost` est un contexte sécurisé : service worker, installation et caméra fonctionnent sans HTTPS sur votre machine.
 Pour tester sur un téléphone, déployez sur GitHub Pages (HTTPS) : la caméra et l’installation l’exigent.
 
+## Lancer avec Docker Desktop
+
+Docker Desktop doit être démarré. Dans le dossier du projet :
+
+```bash
+docker compose up -d --build
+```
+
+Ouvrez ensuite **http://localhost:8080** : l'application est installable et fonctionne hors ligne (`localhost` est un contexte sécurisé).
+Le conteneur `biblio` apparaît dans Docker Desktop, onglet *Containers*. Pour l'arrêter : `docker compose down`.
+
+Sans compose : `docker build -t biblio-pwa .` puis `docker run -d -p 8080:80 --name biblio biblio-pwa`.
+
+Pour utiliser la caméra depuis un téléphone, il faut du HTTPS (par exemple via GitHub Pages ci-dessous) : l'adresse IP de votre PC en HTTP ne suffit pas.
+
 ## Déployer sur GitHub Pages
 
 1. Créez un dépôt GitHub vide, puis poussez ce code sur la branche `main` :

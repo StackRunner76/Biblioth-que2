@@ -1,0 +1,8 @@
+services:
+  biblio:
+    build: .
+    image: biblio-pwa:latest
+    container_name: biblio
+    ports:
+      - "8080:80"
+    restart: unless-stopped
