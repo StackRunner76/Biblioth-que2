@@ -1,7 +1,7 @@
 import { cleanIsbn } from './isbn.js';
 import { catName, nextId, today } from './state.js';
 
-export const CSV_HEADERS = ['titre', 'auteur', 'isbn', 'editeur', 'date', 'categorie', 'genre', 'langue', 'pages', 'lieu', 'qte', 'etat', 'desc', 'quatrieme'];
+export const CSV_HEADERS = ['titre', 'auteur', 'isbn', 'editeur', 'date', 'categorie', 'genre', 'langue', 'pages', 'lieu', 'desc', 'quatrieme'];
 
 /** CSV séparé par « ; », encodé avec BOM pour Excel. */
 export function toCsv(s) {
@@ -69,7 +69,7 @@ export function importCsv(s, text) {
     s.books.push({
       id: nextId(s.books), titre: o.titre, auteur: o.auteur, isbn: n, editeur: o.editeur, date: o.date,
       catId: ct.id, genre: o.genre, langue: o.langue || 'fr', pages: +o.pages || 0, lieu: o.lieu,
-      qte: +o.qte || 1, etat: o.etat || 'Bon', desc: o.desc, quatrieme: o.quatrieme, cover: '', ajout: today(),
+      desc: o.desc, quatrieme: o.quatrieme, cover: '', ajout: today(),
     });
     added++;
   });

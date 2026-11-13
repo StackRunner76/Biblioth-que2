@@ -1,3 +1,5 @@
+import { normalizeLayout } from './dashboard.js';
+
 /** Construit la sauvegarde JSON complète (livres, catégories, réglages). */
 export function buildBackup(s, now = new Date()) {
   return {
@@ -9,6 +11,7 @@ export function buildBackup(s, now = new Date()) {
     settings: { lib: s.lib, gbkey: s.gbkey || '', beep: s.beep !== false },
     cats: s.cats,
     extra: s.extra || { auteur: [], editeur: [] },
+    layout: normalizeLayout(s.layout),
     books: s.books,
   };
 }
@@ -27,8 +30,8 @@ export function parseBackup(d, fb = {}) {
     .map((b) => ({
       id: +b.id, titre: s(b.titre), auteur: s(b.auteur), isbn: s(b.isbn).replace(/[-\s]/g, ''), editeur: s(b.editeur),
       date: s(b.date), catId: +b.catId, genre: s(b.genre), pages: +b.pages || 0, langue: s(b.langue) || 'fr',
-      desc: s(b.desc), quatrieme: s(b.quatrieme), cover: s(b.cover), lieu: s(b.lieu), qte: +b.qte || 1,
-      etat: s(b.etat) || 'Bon', ajout: s(b.ajout) || new Date().toISOString().slice(0, 10),
+      desc: s(b.desc), quatrieme: s(b.quatrieme), cover: s(b.cover), lieu: s(b.lieu),
+      ajout: s(b.ajout) || new Date().toISOString().slice(0, 10),
     }))
     .filter((b) => b.id && b.titre && b.isbn && !seen.has(b.isbn) && seen.add(b.isbn));
   const st = d.settings && typeof d.settings === 'object' ? d.settings : {};
@@ -41,5 +44,6 @@ export function parseBackup(d, fb = {}) {
     extra: { auteur: list('auteur'), editeur: list('editeur') },
     gbkey: gk !== null ? gk.trim() : fb.gbkey || '',
     beep: st.beep !== false,
+    layout: normalizeLayout(d.layout),
   };
 }
