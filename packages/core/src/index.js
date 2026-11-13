@@ -5,3 +5,5 @@ export * from './books.js';
 export * from './csv.js';
 export * from './backup.js';
 export * from './lookup.js';
+export * from './dashboard.js';
+export * from './auth.js';

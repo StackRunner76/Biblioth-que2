@@ -127,7 +127,7 @@ body{background-color:#f3f5f9;background-image:var(--veil),var(--shelf);backgrou
 .z-50{z-index:50}
 .hover\:shadow-lg:hover{box-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1)}
 @media (min-width:640px){.sm\:col-span-2{grid-column:span 2/span 2}.sm\:flex-1{flex:1 1 0%}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.sm\:inline{display:inline}.sm\:max-w-md{max-width:28rem}.sm\:order-none{order:0}.sm\:w-56{width:14rem}}
-@media (min-width:768px){.md\:block{display:block}.md\:flex{display:flex}.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.md\:min-h-screen{min-height:100vh}.md\:p-4{padding:1rem}.md\:p-8{padding:2rem}.md\:w-60{width:15rem}}
+@media (min-width:768px){.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.md\:block{display:block}.md\:flex{display:flex}.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.md\:min-h-screen{min-height:100vh}.md\:p-4{padding:1rem}.md\:p-8{padding:2rem}.md\:w-60{width:15rem}}
 @media (min-width:1024px){.lg\:col-span-2{grid-column:span 2/span 2}.lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.lg\:grid-cols-6{grid-template-columns:repeat(6,minmax(0,1fr))}}
 @media (min-width:1280px){.xl\:grid-cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}}
 html[data-theme=dark]{color-scheme:dark;--veil:linear-gradient(rgba(11,18,32,.86),rgba(11,18,32,.86))}
@@ -145,8 +145,32 @@ html[data-theme=dark] .text-blue-700{color:#7aa7ff}
 html[data-theme=dark] .text-red-600{color:#f87171}
 html[data-theme=dark] .bg-slate-100{background:#2a3652}
 html[data-theme=dark] .bg-slate-50{background:#111a2e}
-html[data-theme=dark] [style*="e3edcf"]{background:#2a3d1c!important;color:#cfe5a8!important}
-html[data-theme=dark] [style*="f3e3b8"]{background:#4a3a14!important;color:#f3dca0!important}
+
+/* Tableau de bord : blocs déplaçables et couvertures */
+.dgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+@media (min-width:1024px){.dgrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.dw{position:relative;min-width:0}
+.dw-wide{grid-column:span 2}
+.dw-full{grid-column:1/-1}
+.dh{position:absolute;top:.45rem;right:.45rem;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:1.15rem;line-height:1;color:#64748b;opacity:.55;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.dw:hover .dh,.dh:focus-visible{opacity:1;background:#e8eefc}
+.dh:active{cursor:grabbing}
+.dw-src{opacity:.35;outline:2px dashed #3b82f6;outline-offset:-2px;border-radius:16px}
+.dw-ghost{position:fixed;z-index:70;margin:0;pointer-events:none;opacity:.92;transform:scale(1.02) rotate(.6deg);box-shadow:0 16px 32px rgba(15,27,61,.3);border-radius:16px;overflow:hidden}
+.dw-ghost .card{box-shadow:none}
+body.dragging,body.dragging *{cursor:grabbing!important;user-select:none;-webkit-user-select:none}
+.rgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+@media (min-width:640px){.rgrid{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.rc{display:block;align-self:start;width:100%;text-align:left;border-radius:12px;transition:transform .15s}
+.rc:hover{transform:translateY(-3px)}
+.ar-23{aspect-ratio:2/3;height:auto}
+.rc .ar-23{box-shadow:0 2px 6px rgba(15,27,61,.25)}
+.clamp2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pr-8{padding-right:2rem}
+.h-full{height:100%}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+html[data-theme=dark] .dh{color:#9aa7c4}
+html[data-theme=dark] .dw:hover .dh,html[data-theme=dark] .dh:focus-visible{background:#26324d}
 
 /* Barre d'état réseau et notifications */
 .toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);transform:translateX(-50%);z-index:60;display:flex;gap:.75rem;align-items:center;max-width:min(92vw,32rem);padding:.65rem .9rem;border-radius:12px;background:#0f1b3d;color:#fff;font-size:.875rem;box-shadow:0 8px 24px rgba(0,0,0,.3)}

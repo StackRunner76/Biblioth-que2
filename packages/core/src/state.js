@@ -1,4 +1,5 @@
 import { seed } from './seed.js';
+import { normalizeLayout } from './dashboard.js';
 
 export const STORAGE_KEY = 'biblio_v1';
 
@@ -15,6 +16,9 @@ export function loadState(storage) {
   if (!isState(s)) s = seed();
   s.lib = s.lib || 'Ma bibliothèque';
   s.extra = s.extra || { auteur: [], editeur: [] };
+  s.layout = normalizeLayout(s.layout);
+  s.users = Array.isArray(s.users) ? s.users : [];
+  s.books.forEach((b) => { delete b.qte; delete b.etat; }); // champs retirés : on nettoie les anciennes données
   return s;
 }
 

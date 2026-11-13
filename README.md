@@ -4,7 +4,8 @@ Application web progressive pour gérer une bibliothèque : catalogue, scan du c
 remplissage automatique via Google Books / Open Library, catégories, auteurs, éditeurs, statistiques, thème clair/sombre,
 import/export CSV et JSON.
 
-- **Sans authentification** : l’application s’ouvre directement, sans compte ni mot de passe.
+- **Tableau de bord personnalisable** : les blocs (compteurs, graphiques, derniers ajouts avec couvertures) se réorganisent par glisser-déposer (souris, tactile) ou au clavier (poignée ⠿ + flèches) ; la disposition est enregistrée et incluse dans la sauvegarde JSON.
+- **Comptes et rôles** : connexion par nom d’utilisateur et mot de passe, avec trois rôles (Administrateur, Gestionnaire, Lecteur) — voir « Accès et rôles » plus bas.
 - **Hors ligne** : installable (ordinateur, Android, iPhone/iPad) et utilisable sans connexion.
 - **Données locales** : tout est enregistré dans le navigateur de l’appareil (`localStorage`). Aucun serveur, aucune base de données.
 - **Aucune dépendance** : seulement Node.js ≥ 20 pour construire le site.
@@ -24,6 +25,28 @@ import/export CSV et JSON.
 │   └── serve.mjs            Serveur local pour prévisualiser dist/
 └── .github/workflows/       Tests + déploiement automatique sur GitHub Pages
 ```
+
+## Accès et rôles
+
+Au premier lancement, l’application demande de créer le compte **Administrateur**. Celui-ci ajoute ensuite les autres utilisateurs dans le menu *Utilisateurs*.
+
+| Action | Administrateur | Gestionnaire | Lecteur |
+|---|:-:|:-:|:-:|
+| Consulter tableau de bord, catalogue, fiches, statistiques | ✅ | ✅ | ✅ |
+| Ajouter / modifier / supprimer des livres, scanner | ✅ | ✅ | — |
+| Gérer catégories, auteurs, éditeurs | ✅ | ✅ | — |
+| Importer / exporter le CSV | ✅ | ✅ | — |
+| Nom de la bibliothèque, clé API | ✅ | — | — |
+| Sauvegarde / restauration JSON, réinitialisation | ✅ | — | — |
+| Gérer les utilisateurs et leurs rôles | ✅ | — | — |
+
+Chacun peut changer son mot de passe (Paramètres → Mon compte). Un administrateur peut réinitialiser le mot de passe de n’importe quel utilisateur ; il reste toujours au moins un administrateur. Les mots de passe sont salés et hachés (PBKDF2-SHA256), jamais stockés en clair. Les comptes ne sont **pas** inclus dans la sauvegarde JSON, et un import ou une réinitialisation les conserve.
+
+**Limite importante.** L’application n’a pas de serveur : comptes et livres sont dans le `localStorage` du navigateur. Les rôles encadrent l’usage normal de l’interface, mais ne constituent pas une barrière de sécurité : quelqu’un qui maîtrise les outils de développement du navigateur sur cet appareil peut lire ou modifier les données. Pour un contrôle d’accès réellement étanche, il faudrait un serveur d’authentification et une base de données centrale.
+
+**Mot de passe administrateur perdu** (et aucun autre administrateur) : sur l’appareil, ouvrez la console du navigateur (F12) et exécutez
+`const s=JSON.parse(localStorage.getItem('biblio_v1'));s.users=[];localStorage.setItem('biblio_v1',JSON.stringify(s));location.reload()`
+— les livres sont conservés, et l’écran de création du compte administrateur réapparaît. Pensez donc à créer deux administrateurs.
 
 ## Commandes
 
