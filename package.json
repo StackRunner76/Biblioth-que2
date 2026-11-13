@@ -1,21 +1,12 @@
 {
-  "name": "biblio-monorepo",
+  "name": "@biblio/web",
   "version": "1.0.0",
   "private": true,
-  "description": "Biblio — gestion de catalogue de bibliothèque, en PWA (monorepo)",
+  "description": "Application web progressive (PWA) Biblio",
   "type": "module",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "engines": {
-    "node": ">=20"
-  },
+  "dependencies": { "@biblio/core": "*" },
   "scripts": {
-    "build": "node scripts/build.mjs",
-    "start": "node scripts/serve.mjs",
-    "dev": "node scripts/build.mjs && node scripts/serve.mjs",
-    "test": "node --test \"packages/core/test/**/*.test.js\"",
-    "check": "npm test && npm run build"
+    "build": "node ../../scripts/build.mjs",
+    "start": "node ../../scripts/serve.mjs"
   }
 }
